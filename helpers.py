@@ -22,7 +22,7 @@ class Data(object):
         self._outlier_check()
         self._handle_missing_data()
         self._corr_check()
-        #self._get_plots()
+        self._get_plots()
         self._feature_engineering()
 
     def _eda_analysis(self):
@@ -103,9 +103,6 @@ class Data(object):
         #self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
         self.df['Outcome'].fillna('None', inplace=True)
 
-        print("sf", self.df.head())
-        print("outcome", self.df.Outcome.unique())
-
         # Fill Communication column with None, and Job and Education columns with the most frequent value
         self.df['Communication'].fillna('None', inplace=True)
         self.df['Education'].fillna(self.df.mode().iloc[0]['Education'], inplace=True)
@@ -165,14 +162,22 @@ class Data(object):
         self.df.drop(columns=['CallStart', 'CallEnd'], inplace=True)
 
         # Convert numerical columns into data with bins  
-        self.df['Age'] = pd.qcut(self.df['Age'], 5, labels = [1,2,3,4,5])
-        self.df['Balance'] = pd.qcut(self.df['Balance'], 5, labels = [1,2,3,4,5])
-        self.df['CallDuration'] = pd.qcut(self.df['CallDuration'], 5, labels = [1,2,3,4,5])
+        #self.df['Age'] = pd.qcut(self.df['Age'], 5, labels = [1,2,3,4,5])
+        #self.df['Balance'] = pd.qcut(self.df['Balance'], 5, labels = [1,2,3,4,5])
+        #self.df['CallDuration'] = pd.qcut(self.df['CallDuration'], 5, labels = [1,2,3,4,5])
+
         numerical_cols = self.df.select_dtypes(include=['float64', 'int64']).columns
         df_numerical = self.df[numerical_cols]
+        print("Numerical columns: \n", numerical_cols)
+    
+        #cats = ['Job', 'Marital', 'Education', 'Communication', 'Outcome','LastContactDay']
+        #self.df = self.df[cats]
 
         # Convert categorical columns into one-hot encoding
         categorical_cols = self.df.select_dtypes(include=['object']).columns
+
+        print("Categorical columns: \n", categorical_cols)
+
         df_categorical = self.df[categorical_cols]
         df_categorical = pd.get_dummies(df_categorical, dummy_na=True)
 
@@ -183,12 +188,16 @@ class Data(object):
         idx = pd.IndexSlice
         df_train_data = self.df_all.loc[idx[['train',],:]]
         df_test_data = self.df_all.loc[idx[['test',],:]]
+
+        print("Columns: \n", df_train_data.columns)
         
         # Convert them into numpy arrays
         self.data['train_labels'] = df_train_data['CarInsurance'].values
         self.data['train_data'] = df_train_data.loc[:, df_train_data.columns != 'CarInsurance'].values
         self.data['test_labels'] = df_test_data['CarInsurance'].values
         self.data['test_data'] = df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].values
+        
+        print("train", self.data['train_data'].shape)
 
         print("Train and test data split. \n")
         
