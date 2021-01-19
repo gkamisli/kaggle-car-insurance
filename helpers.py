@@ -17,12 +17,12 @@ class Data(object):
     
         # Load dataset
         self.df_train_data, self.df_test_data = self._load_dataset()
-    
+
         self._eda_analysis()
         self._outlier_check()
         self._handle_missing_data()
         self._corr_check()
-        #self._get_plots()
+        self._get_plots()
         self._feature_engineering()
 
     def _eda_analysis(self):
@@ -47,6 +47,7 @@ class Data(object):
     def _outlier_check(self):
 
         self.df = pd.concat([self.df_train_data, self.df_test_data], keys=('train','test'))
+        #self.df = self.df_train_data
 
         # Call duration as a new column, convert TimeDelta format to total seconds
         self.df['CallDuration'] = pd.to_datetime(self.df['CallEnd']) - pd.to_datetime(self.df['CallStart'])
@@ -85,8 +86,6 @@ class Data(object):
         self.df.drop(self.df.loc[self.df.Balance == self.df.Balance.max()].index, inplace=True)
         self.df.drop(self.df.loc[self.df.PrevAttempts == self.df.PrevAttempts.max()].index, inplace=True)
 
-        print("BBBBB", self.df.isnull().sum())
-
         print("Outlier checks completed. \n")
 
     def _handle_missing_data(self):
@@ -95,11 +94,10 @@ class Data(object):
         print("Missing values: \n", self.df.isnull().sum())
 
         perc_with_missing_values = {self.df.columns[i]: mv/len(self.df) for i, mv in enumerate(self.df.isnull().sum()) if mv > 0}
-        print("Percentage of missing values:", perc_with_missing_values, '\n')
+        print("Percentage of missing values: \n", perc_with_missing_values, '\n')
 
         # Remove any column if there are more than 50% of missing values
-        #self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
-        self.df['Outcome'].fillna('None', inplace=True)
+        self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
 
         # Fill Communication column with None, and Job and Education columns with the most frequent value
         self.df['Communication'].fillna('None', inplace=True)
@@ -178,13 +176,15 @@ class Data(object):
         idx = pd.IndexSlice
         df_train_data = self.df_all.loc[idx[['train',],:]]
         df_test_data = self.df_all.loc[idx[['test',],:]]
-
-        print("traindata", df_train_data.columns)
+        #df_train_data = self.df
+        #df_test_data = self.df_test_data
         
         # Convert them into numpy arrays
         self.data['train_labels'] = df_train_data['CarInsurance'].values
-        self.data['train_data'] = df_train_data.loc[:, df_test_data.columns != 'CarInsurance'].values
+        #print("check1", df_train_data.loc[:, df_train_data.columns != 'CarInsurance'].head())
+        self.data['train_data'] = df_train_data.loc[:, df_train_data.columns != 'CarInsurance'].values
         self.data['test_labels'] = df_test_data['CarInsurance'].values
+        #print("check2", df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].head())
         self.data['test_data'] = df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].values
 
         print("Train and test data split. \n")
