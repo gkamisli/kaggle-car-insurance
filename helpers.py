@@ -22,7 +22,7 @@ class Data(object):
         self._outlier_check()
         self._handle_missing_data()
         self._corr_check()
-        self._get_plots()
+        #self._get_plots()
         self._feature_engineering()
 
     def _eda_analysis(self):
@@ -96,8 +96,15 @@ class Data(object):
         perc_with_missing_values = {self.df.columns[i]: mv/len(self.df) for i, mv in enumerate(self.df.isnull().sum()) if mv > 0}
         print("Percentage of missing values: \n", perc_with_missing_values, '\n')
 
+        # Fill any corresponding rows of Outcome with -1 from DaysPassed with "No Campaign"
+        self.df.loc[self.df['DaysPassed'] == -1, 'Outcome'] = 'no_campaign'
+
         # Remove any column if there are more than 50% of missing values
-        self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
+        #self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
+        self.df['Outcome'].fillna('None', inplace=True)
+
+        print("sf", self.df.head())
+        print("outcome", self.df.Outcome.unique())
 
         # Fill Communication column with None, and Job and Education columns with the most frequent value
         self.df['Communication'].fillna('None', inplace=True)
@@ -176,15 +183,11 @@ class Data(object):
         idx = pd.IndexSlice
         df_train_data = self.df_all.loc[idx[['train',],:]]
         df_test_data = self.df_all.loc[idx[['test',],:]]
-        #df_train_data = self.df
-        #df_test_data = self.df_test_data
         
         # Convert them into numpy arrays
         self.data['train_labels'] = df_train_data['CarInsurance'].values
-        #print("check1", df_train_data.loc[:, df_train_data.columns != 'CarInsurance'].head())
         self.data['train_data'] = df_train_data.loc[:, df_train_data.columns != 'CarInsurance'].values
         self.data['test_labels'] = df_test_data['CarInsurance'].values
-        #print("check2", df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].head())
         self.data['test_data'] = df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].values
 
         print("Train and test data split. \n")
