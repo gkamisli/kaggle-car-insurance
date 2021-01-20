@@ -142,7 +142,7 @@ param_grid = {
     'criterion': ['gini'],
     'min_samples_split': [7, 8]
 }
-'''
+```
 
 Best parameters: 
 ```Best parameters: 
