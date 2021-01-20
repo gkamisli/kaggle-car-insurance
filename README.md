@@ -49,19 +49,20 @@ According to Balance and PrevAttempts boxplots below, we can see that values are
 </p>
 
 **Missing data:**
+
 As one of biggest problem inherent in datasets, tackling with missing data is important task for the predictive model. Even though some models such as XGBoost classifiers can handle missing data, others like RandomForest classifier or Neural Networks are sensitive to having missing data. Hence, we need to impute them before building the models. 
 
 In our dataset, Job, Education, Communication, and Outcome columns have missing values. While Job and Education have considerable amount of missing data (0.4% and 4.3%, respectively), there are significant number of missing value in Communication and Outcome (22.5% and 76%, respectively).
-
-<p align="center">
-    <img src="/visuals/missing_data_per_column.png" width=200>
-</p>
 
 Steps followed:
 1. Assign "No Campaign" in *Outcome* to the rows with *DaysPassed = -1*
 2. Fill remaining NA in *Outcome* with None
 3. Fill NA in *Communication* with None
 4. Fill NA in *Education* and *Job* with the most frequent value 
+
+<p align="center">
+    <img src="/visuals/missing_data_per_column.png" width=200>
+</p>
 
 **Visualisation/plots:**
 
@@ -81,7 +82,7 @@ Steps followed:
 ## Setup the environment
 
 Python requirement: > Python3.7.5
-<br>pip install -r requirements.txt
+<br>$ pip install -r requirements.txt
 
 **4 Automated Tests**
 
