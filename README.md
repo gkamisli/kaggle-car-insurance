@@ -124,14 +124,29 @@ The models used for this classification are RandomForest as the baseline model, 
 
 **Model cross-validation**: 
 
-Because test data isn't labelled, train data is split into train and validation data for model comparisons. 
-- Baseline (RandomForest) and XGBoost: 5-fold cross-validation is used along with Grid Search to find the best parameters and model. So, 
-- Neural Network: Validation data is obtained from 25% of train data. Then, it is used against the train data not to overfit while training the model at every epoch. 
+Because test data isn't labelled, training data is split into train and validation data for model comparisons. 
+- Baseline (RandomForest) and XGBoost: 5-fold cross-validation is used along with Grid Search to find the best parameters and model.
+- Neural Network: Validation data is obtained from 25% of training data. Then, it is used against the training data not to overfit while training the model at every epoch. 
 
 **Baseline Model**
 
+RandomForest classifier is used to investigate how a basic set of decision trees would perform on our data. Because not all features contribute as equally significant as others, *max_features* parameter has been used. *n_estimators* and *max_depth* are to check whether the number and depth of trees will influence on the majority of vote; hence, the prediction results. *min_samples_split* is increased for minimum number of samples required per node. 
 
+The parameter grid used for the grid search is:
 
+```
+param_grid = {
+    'n_estimators': [100, 200],
+    'max_features': [15, 16],
+    'max_depth': [8, 9],
+    'criterion': ['gini'],
+    'min_samples_split': [7, 8]
+}
+'''
+
+Best parameters: 
+```Best parameters: 
+ {'criterion': 'gini', 'max_depth': 9, 'max_features': 15, 'min_samples_split': 7, 'n_estimators': 100}```
 
 **XGBoost Model**
 
@@ -147,5 +162,6 @@ Python requirement: > Python3.7.5
 ##
 ### **4 Automated Tests**
 
+The aim of the automated test is to check the processes of training, saving, and loading the models, evaluating their performances on the same validation data, and   
 Filepath to run model tests: kaggle-car-insurance/
 <br>$ python -m unittest discover -s tests -p test_models.py -t ..
