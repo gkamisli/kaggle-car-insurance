@@ -23,7 +23,7 @@ EDA consists of couple of steps such as checking raw dataframe, handling null (N
 - Outlier check:
 
 According to Balance and PrevAttempts boxplots below, we can see that values are distributed homogenously, but one particular data point is far from other data points. So, that data point (maximum number in columns) is dropped from the dataset not to create any noise. As can be seen, there is no outlier in CallDuration and DaysPassed. 
-![balance_outlier_check](/visuals/balance_boxplot.png)
+<img src="/visuals/balance_boxplot.png" width=100>
 
 ![prevattempts_outlier_check](/visuals/prev_attempts_boxplot.png)
 
