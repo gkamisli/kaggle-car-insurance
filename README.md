@@ -206,7 +206,7 @@ F1 scores:
 ### **3. Setup the environment**
 
 Setup a virtual environment and install necessary packages with requirements.txt
-Python requirement: > Python3.7.5
+<br>Python requirement: > Python3.7.5
 <br>$ pip install -r requirements.txt
 
 ##
