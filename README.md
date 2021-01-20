@@ -176,6 +176,20 @@ Best parameters:
 
 **Neural Network Model**
 
+Neural Network is built to compare the performance of a basic deep learning model with statistical predictive models. ModelCheckpoint, EarlyStopping, and ReduceLROnPlateau are used along with the fit function to monitor validation accuracy, save the model whenever the validation accuracy improves, halt the training or reduce the learning rate if no further improvement. 
+
+Model parameters and hyperparameters:
+```
+{'LSTM_neurons': 64,
+    'LSTM_dropout': 0.1, 
+    'LSTM_kernel_regularizer': l2(0.00001),
+    'optimizer': Adam,
+    'learning_rate': 0.001,
+    'epochs': 100,
+    'batch_size': 5,
+}
+
+**Models Comparison**
 
 ## 
 ### **3. Setup the environment**
