@@ -71,7 +71,7 @@ We seek a dependency relationship between columns with CarInsurance sales. Here 
 
 <p align="center">
     <img src="/visuals/correlations.png" width=300>
-    <img src="/visuals/correlation_matrix_heatmap.png" width=600>
+    <img src="/visuals/correlation_matrix_heatmap.png" width=550>
 </p>
 
 **Data visualisation/plots:**
@@ -89,14 +89,14 @@ Important information from the plots:
 The barplots of categorical columns like Communication, Education, Marital, Job, and LastContactMonth show that single people and highly educated (tertiary) are more inclined to purchase car insurances.
 
 <p align="center">
-    <img src="/visuals/Communication_carinsurance_plot.png" width=500>
-    <img src="/visuals/Education_carinsurance_plot.png" width=500>
-    <img src="/visuals/Marital_carinsurance_plot.png" width=500>
+    <img src="/visuals/Communication_carinsurance_plot.png" width=450>
+    <img src="/visuals/Education_carinsurance_plot.png" width=450>
+    <img src="/visuals/Marital_carinsurance_plot.png" width=450>
 </p>
 
 <p align="center">
-    <img src="/visuals/Job_carinsurance_plot.png" width=500>
-    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=500>
+    <img src="/visuals/Job_carinsurance_plot.png" width=450>
+    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=450>
 </p>
 
 **Feature engineering:**
@@ -113,7 +113,7 @@ df['CallDuration'] = pd.qcut(df['CallDuration'], 5, labels = [1,2,3,4,5])
 - However, it creates more noise to the models and decreased the accuracy/F1 score. So, keeping those features as it is results better. 
 
 Categorical features:
-- Predictive models need an numerical encoding for string data (e.g. one-hot encoding, word vectors with embeddings, ordinal representation); hence, categorical columns are converted into one-hot encoding representation. 
+- Predictive models need numerical encodings for string data (e.g. one-hot encoding, word vectors with embeddings, ordinal representation); hence, categorical columns are converted into one-hot encoding representation. 
 
 ### **2. Model Selection**
 
