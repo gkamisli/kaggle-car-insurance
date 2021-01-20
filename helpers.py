@@ -46,8 +46,8 @@ class Data(object):
     
     def _outlier_check(self):
 
+        # Concatenate train and test data
         self.df = pd.concat([self.df_train_data, self.df_test_data], keys=('train','test'))
-        #self.df = self.df_train_data
 
         # Call duration as a new column, convert TimeDelta format to total seconds
         self.df['CallDuration'] = pd.to_datetime(self.df['CallEnd']) - pd.to_datetime(self.df['CallStart'])
@@ -100,7 +100,6 @@ class Data(object):
         self.df.loc[self.df['DaysPassed'] == -1, 'Outcome'] = 'no_campaign'
 
         # Remove any column if there are more than 50% of missing values
-        #self.df.drop([col for col, perc in perc_with_missing_values.items() if perc >= 0.5], axis=1, inplace=True)
         self.df['Outcome'].fillna('None', inplace=True)
 
         # Fill Communication column with None, and Job and Education columns with the most frequent value
@@ -161,17 +160,10 @@ class Data(object):
         self.df['LastContactMonth'] = pd.to_datetime(self.df['LastContactMonth'], format="%b").dt.month
         self.df.drop(columns=['CallStart', 'CallEnd'], inplace=True)
 
-        # Convert numerical columns into data with bins  
-        #self.df['Age'] = pd.qcut(self.df['Age'], 5, labels = [1,2,3,4,5])
-        #self.df['Balance'] = pd.qcut(self.df['Balance'], 5, labels = [1,2,3,4,5])
-        #self.df['CallDuration'] = pd.qcut(self.df['CallDuration'], 5, labels = [1,2,3,4,5])
-
+        # Numerical columns
         numerical_cols = self.df.select_dtypes(include=['float64', 'int64']).columns
         df_numerical = self.df[numerical_cols]
         print("Numerical columns: \n", numerical_cols)
-    
-        #cats = ['Job', 'Marital', 'Education', 'Communication', 'Outcome','LastContactDay']
-        #self.df = self.df[cats]
 
         # Convert categorical columns into one-hot encoding
         categorical_cols = self.df.select_dtypes(include=['object']).columns
@@ -197,7 +189,7 @@ class Data(object):
         self.data['test_labels'] = df_test_data['CarInsurance'].values
         self.data['test_data'] = df_test_data.loc[:, df_test_data.columns != 'CarInsurance'].values
         
-        print("train", self.data['train_data'].shape)
+        print("Number of features: ", self.data['train_data'].shape[1])
 
         print("Train and test data split. \n")
         
