@@ -82,18 +82,18 @@ Important information from the plots:
 - DaysPassed: People are more likely to buy car insurance if they're contacted after longer period of time. 
 
 <p align="center">
-    <img src="/visuals/pairwise_plots.png">
+    <img src="/visuals/pairwise_plots.png" width=500>
 </p>
 
 <p align="center">
-    <img src="/visuals/Communication_carinsurance_plot.png">
-    <img src="/visuals/Education_carinsurance_plot.png">
-    <img src="/visuals/Marital_carinsurance_plot.png">
+    <img src="/visuals/Communication_carinsurance_plot.png" width=250>
+    <img src="/visuals/Education_carinsurance_plot.png" width=250>
+    <img src="/visuals/Marital_carinsurance_plot.png" width=250>
 </p>
 
 <p align="center">
-    <img src="/visuals/Job_carinsurance_plot.png">
-    <img src="/visuals/LastContactMonth_carinsurance_plot.png">
+    <img src="/visuals/Job_carinsurance_plot.png" width=250>
+    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=250>
 </p>
 
 
