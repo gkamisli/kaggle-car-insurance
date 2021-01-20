@@ -23,11 +23,15 @@ Exploration of the dataset, including a snapshot of the dataset, datatypes of ea
 
 Our dataset has 18 columns of which 8 columns are *object* datatype (i.e. string or mixed), and the rest are *int64* datatype. 
 
-<img src="visuals/dataframe_head.png>
+<p align="center">
+    <img src="visuals/dataframe_head.png">
+</p>
 
-<img src="visuals/description_per_column.png">
+<p align="center">
+    <img src="/visuals/dtypes_per_column.png" width=400>
+</p>
 
-<img src="/visuals/dtypes_per_column.png" width=400>
+
     
 
 **Outlier check**:
