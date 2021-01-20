@@ -18,7 +18,8 @@
 
 EDA consists of couple of steps such as checking raw dataframe, handling null (NaN) or outliers, retrieving correlation values between columns and CarInsurance, investigating plots for more explanations, and feature engineering. 
 
-**DataFrame checks:**
+**DataFrame:**
+
 Exploration of the dataset, including a snapshot of the dataset, datatypes of each column, statistics behind each column is needed before going deeper into the data processing and feature engineering steps. 
 
 Our dataset has 18 columns of which 8 columns are *object* datatype (i.e. string or mixed), and the rest are *int64* datatype. 
@@ -28,11 +29,9 @@ Our dataset has 18 columns of which 8 columns are *object* datatype (i.e. string
 </p>
 
 <p align="center">
-    <img src="/visuals/dtypes_per_column.png" width=400>
+    <img src="/visuals/dtypes_per_column.png" width=200>
 </p>
 
-
-    
 
 **Outlier check**:
 
