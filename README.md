@@ -145,10 +145,34 @@ param_grid = {
 ```
 
 Best parameters: 
-```Best parameters: 
- {'criterion': 'gini', 'max_depth': 9, 'max_features': 15, 'min_samples_split': 7, 'n_estimators': 100}```
+```
+{'criterion': 'gini', 'max_depth': 9, 'max_features': 16, 'min_samples_split': 8, 'n_estimators': 100}
+```
 
 **XGBoost Model**
+
+XGBoost classifier has been implemented to investigate how boosting model training in succession, with each model being fine-tuned to correct the errors made by the previous models. *n_estimators* and *max_depth* are applied for the effect of number and depth of the trees. *n_jobs* is for parallel threads to run xgboost. *subsample* and *colsample_bytree* have been implemented to set a fraction of observations and columns to randomly assign per each tree.
+
+The parameter grid used for the grid search is:
+
+```
+param_grid = {
+    'n_estimators': [800, 900],
+    'learning_rate': [0.01],
+    'max_depth': [3,4],
+    'min_child_weight': [1],
+    'subsample': [0.8],
+    'n_jobs': [15],
+    'colsample_bytree':[0.3],
+    'objective': ['binary:logistic'],
+    'eval_metric': ['error'],
+}
+```
+
+Best parameters:
+```
+{'colsample_bytree': 0.3, 'eval_metric': 'error', 'learning_rate': 0.01, 'max_depth': 4, 'min_child_weight': 1, 'n_estimators': 900, 'n_jobs': 15, 'objective': 'binary:logistic', 'subsample': 0.8}
+```
 
 **Neural Network Model**
 
