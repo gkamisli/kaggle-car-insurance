@@ -71,7 +71,7 @@ We seek a dependency relationship between columns with CarInsurance sales. Here 
 
 <p align="center">
     <img src="/visuals/correlations.png" width=300>
-    <img src="/visuals/correlation_matrix_heatmap.png" width=550>
+    <img src="/visuals/correlation_matrix_heatmap.png" width=600>
 </p>
 
 **Data visualisation/plots:**
@@ -188,8 +188,18 @@ Model parameters and hyperparameters:
     'epochs': 100,
     'batch_size': 5,
 }
+```
 
 **Models Comparison**
+
+Model comparison on the validation dataset help us determine the models' predictive power. Even though the most common metric for the performance is accuracy, F1 score is also very significant to incorporate false positives and false negatives. RandomForest and XGBoost achieve a similar accuracy and F1 scores while Neural Network is left behind a couple of percent. The underlying reason possibly stems from the lack of finetuning of the parameters and hyperparameters.
+
+```
+Accuracy Results: 
+{'RandomForest': 0.84625, 'XGBoost': 0.84375, 'Neural Network': 0.8174999952316284} 
+F1 scores: 
+{'RandomForest': 0.8081123244929797, 'XGBoost': 0.8012718600953894, 'Neural Network': 0.7725856697819314}
+```
 
 ## 
 ### **3. Setup the environment**
