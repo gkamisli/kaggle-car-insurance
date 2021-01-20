@@ -16,8 +16,6 @@ import os, sys
 import time
 import pickle
 
-from helpers import Data
-
 python_version = (sys.version_info[0], sys.version_info[1], sys.version_info[2])
 assert sys.version_info > (3,7,5), f"Your Python version is: {python_version[0]}.{python_version[1]}.{python_version[2]}. Upgrade it to at least version 3.7.5"
 
@@ -27,6 +25,7 @@ class BaselineModel(object):
     def __init__(self, filepath):
 
         self.clf = None
+        self.name = "RandomForest"
         self.filepath = filepath
 
     def train_model(self, X_train, y_train):
@@ -36,22 +35,12 @@ class BaselineModel(object):
         print("..RandomForest classifier..")
 
         # GridSearch and 5-Cross Validation
-        '''
         param_grid = {
-            'n_estimators': [100, 200, 500],
+            'n_estimators': [100, 200],
             'max_features': [15, 16],
-            'max_depth': [9, 10, 11],
+            'max_depth': [8, 9],
             'criterion': ['gini'],
-            'min_samples_split': [7, 8, 9]
-        }
-        '''
-
-        param_grid = {
-            'n_estimators': [100],
-            'max_features': [15],
-            'max_depth': [9],
-            'criterion': ['gini'],
-            'min_samples_split': [7]
+            'min_samples_split': [7, 8]
         }
 
         # Instantiate RandomForestClassifier and train
@@ -79,7 +68,9 @@ class BaselineModel(object):
         print("Time: {}".format(time.time()-st), '\n')
 
     def classify_insurance(self, person_details):
-        pass
+
+        pred = self.clf.predict_proba(person_details.reshape(1,-1))
+        return {"Car Insurance Probability": pred[0][1]}
     
 
 class XGBoostModel(object):
@@ -87,6 +78,7 @@ class XGBoostModel(object):
     def __init__(self, filepath):
 
         self.clf = None
+        self.name = "XGBoost"
         self.filepath = filepath
 
     def train_model(self, X_train, y_train):
@@ -96,30 +88,16 @@ class XGBoostModel(object):
         print("..XGBoost classifier..")
 
         # GridSearch and 5-Cross Validation
-        '''
         param_grid = {
-            'n_estimators': [900, 1000, 1100, 1200],
+            'n_estimators': [800, 900],
             'learning_rate': [0.01],
-            'max_depth': [3,4,5],
-            'min_child_weight': [1],
-            'subsample': [0.8],
-            'n_jobs': [15],
-            'colsample_bytree':[0.3,0.4,0.5],
-            #'objective': ['binary:logistic'],
-            #'eval_metric': ['error', 'logloss'],
-        }
-        '''
-
-        param_grid = {
-            'n_estimators': [900],
-            'learning_rate': [0.01],
-            'max_depth': [3],
+            'max_depth': [3,4],
             'min_child_weight': [1],
             'subsample': [0.8],
             'n_jobs': [15],
             'colsample_bytree':[0.3],
             'objective': ['binary:logistic'],
-            'eval_metric': ['error', 'logloss'],
+            'eval_metric': ['error'],
         }
 
         # Instantiate RandomForestClassifier and train
@@ -149,20 +127,23 @@ class XGBoostModel(object):
         print("Time: {}".format(time.time()-st), '\n')     
 
     def classify_insurance(self, person_details):
-        pass
 
+        pred = self.clf.predict_proba(person_details.reshape(1,-1))
+        return {"Car Insurance Probability": pred[0][1]}
+    
 
 class NeuralNetworkModel(object):
 
     def __init__(self, filepath):
 
         self.clf = None
+        self.name = "Neural Network"
         self.filepath = filepath
 
     def _build_model(self):
 
         self.clf = Sequential()
-        self.clf.add(LSTM(32, dropout=0.1, kernel_regularizer=l2(0.00001), return_sequences=True))
+        self.clf.add(LSTM(16, dropout=0.1, kernel_regularizer=l2(0.00001), return_sequences=True))
         self.clf.add(Dense(4))
         self.clf.add(Dense(2))
         self.clf.add(Dense(1, activation='sigmoid', name='output_layer'))
@@ -179,8 +160,13 @@ class NeuralNetworkModel(object):
 
         self._build_model()
 
-        X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train, test_size=0.25, shuffle=True, random_state=42)
-        self.clf.fit(np.expand_dims(X_train, 1), y_train, verbose=1, epochs=1, batch_size=5, validation_data=(np.expand_dims(X_val,1), y_val), callbacks=self.callback())
+        X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train, test_size=0.25, shuffle=True, random_state=0)
+        self.clf.fit(np.expand_dims(X_train, 1), 
+                    y_train, verbose=1, 
+                    epochs=1, 
+                    batch_size=5, 
+                    validation_data=(np.expand_dims(X_val,1), y_val), 
+                    callbacks=self.callback())
 
     def callback(self):
         checkpoint = ModelCheckpoint(
@@ -195,7 +181,7 @@ class NeuralNetworkModel(object):
                                     monitor = 'val_accuracy',
                                     mode='max', 
                                     verbose=1,
-                                    patience=20,
+                                    patience=50,
                                     restore_best_weights=True
                                     )
 
@@ -205,40 +191,35 @@ class NeuralNetworkModel(object):
                                                 cooldown=0,
                                                 patience=30,
                                                 verbose=1,
-                                                mode='max',
+                                                mode='max', 
                                                 min_lr=0.5e-6
                                                 )
-        callbacks = [checkpoint, learning_rate_reducer]
+        callbacks = [checkpoint, learning_rate_reducer, earlystopping]
         return callbacks
 
     def classify_insurance(self, person_details):
-        pass
-        
+
+        pred = self.clf.predict(np.expand_dims(person_details.reshape(1,-1), 1))
+        return {"Car Insurance Probability": pred[0][0][0]}
+
 
 class ModelPipes(object):
 
-    def __init__(self, filepath):
+    def __init__(self, filepath='models'):
 
+        self.data = None
         self.filepath = filepath
-        self.data = Data().data
 
         # Models
         self.baseline = BaselineModel(filepath)
         self.xgboost = XGBoostModel(filepath)
         self.nn = NeuralNetworkModel(filepath)
-                
-        # Split train/validation data
-        self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(self.data['train_data'].astype(float), 
-                                                                              self.data['train_labels'].astype(float), 
-                                                                              stratify = self.data['train_labels'], 
-                                                                              test_size = 0.2, 
-                                                                              random_state = 42)
 
 
     def train_pipes(self):
 
-        if not os.path.exists(self.filepath):
-            os.mkdir(self.filepath)
+        if not self.data: 
+            self._data_load()
 
         self.baseline.train_model(self.X_train, self.y_train)
         self.xgboost.train_model(self.X_train, self.y_train)
@@ -248,6 +229,9 @@ class ModelPipes(object):
     def load_pipes(self):
 
         if not os.path.exists(self.filepath):
+            os.mkdir(self.filepath)
+        
+        if len(os.listdir(self.filepath))!=3:
             self.train_pipes()
             
         with open(os.path.join(self.filepath, 'randomforestclassifier.pickle'), 'rb') as f:
@@ -261,36 +245,48 @@ class ModelPipes(object):
         self.nn.clf = load_model(os.path.join(self.filepath, 'nn_model.h5'))
         print("Neural network loaded.")
 
+        return self
+
 
     def eval_pipes(self):
 
+        acc_results, f1_score_results = {}, {}
+
         self.load_pipes()
+
+        if not self.data:
+            self._data_load()
 
         # Accuracy, F1 score on validation data
         for model in [self.baseline, self.xgboost, self.nn]:
 
             if model == self.nn:
-                print("Neural Network")
                 self.X_val = np.expand_dims(self.X_val,1)
                 preds = model.clf.predict(self.X_val).round()
                 preds = np.squeeze(preds)
                 acc = model.clf.evaluate(self.X_val, self.y_val)[1]
             else:
-                if model == self.baseline: print("Baseline Model")
-                else: print("XGBoost Classifier")
-
                 preds = model.clf.predict(self.X_val)
                 acc = model.clf.score(self.X_val, self.y_val)
             
             f1 = f1_score(self.y_val, preds)
-            print('''Accuracy: {},
-                    F1 Score: {}'''.format(acc, f1))  
+            acc_results[model.name] = acc
+            f1_score_results[model.name] = f1
+
+        print("Accuracy Results: \n", acc_results, "\n F1 scores: \n", f1_score_results)
 
 
-if __name__ == "__main__":
-    models = ModelPipes('models')
-    models = models.eval_pipes()
+    def _data_load(self):
 
-    
+        # Not to import everytime when using UnitTest 
+        from helpers import Data
+        self.data = Data().data
+
+        # Split train/validation data
+        self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(self.data['train_data'].astype(float), 
+                                                                              self.data['train_labels'].astype(float), 
+                                                                              stratify = self.data['train_labels'], 
+                                                                              test_size = 0.2, 
+                                                                              random_state = 42)
 
         
