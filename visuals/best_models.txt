@@ -1,0 +1,16 @@
+..RandomForest classifier..
+Best parameters: 
+ {'criterion': 'gini', 'max_depth': 9, 'max_features': 15, 'min_samples_split': 7, 'n_estimators': 100}
+RandomForest classifier saved.
+Time: 4.505231857299805 
+
+..XGBoost classifier..
+Best parameters: 
+ {'colsample_bytree': 0.3, 'eval_metric': 'error', 'learning_rate': 0.01, 'max_depth': 3, 'min_child_weight': 1, 'n_estimators': 900, 'n_jobs': 15, 'objective': 'binary:logistic', 'subsample': 0.8}
+XGBoost classifier saved.
+Time: 19.01315212249756 
+
+Accuracy Results: 
+ {'RandomForest': 0.845, 'XGBoost': 0.84375, 'Neural Network': 0.6399999856948853} 
+ F1 scores: 
+ {'RandomForest': 0.8068535825545172, 'XGBoost': 0.8012718600953894, 'Neural Network': 0.33023255813953484}
