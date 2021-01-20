@@ -54,7 +54,7 @@ According to Balance and PrevAttempts boxplots below, we can see that values are
 
 As one of biggest problem inherent in datasets, tackling with missing data is important task for the predictive model. Even though some models such as XGBoost classifiers can handle missing data, others like RandomForest classifier or Neural Networks are sensitive to data with missing values. Hence, we need to impute them before building the models. 
 
-In our dataset, Job, Education, Communication, and Outcome columns have missing values. While Job and Education have considerable amount of missing data (0.4% and 4.3%, respectively), there are significant number of missing value in Communication and Outcome (22.5% and 76%, respectively).
+In our dataset, Job, Education, Communication, and Outcome columns have missing values. While Job and Education have considerable amount of missing data (0.4% and 4.3%, respectively), there are significant number of missing value in Communication and Outcome (22.5% and 76%, respectively). 1000 rows of CarInsurance appear as missing data due to the concatenation of training data with test data, which are intentionally left missing for the prediction.
 
 Steps followed:
 1. Assign "No Campaign" in *Outcome* to the rows with *DaysPassed = -1*
