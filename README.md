@@ -8,11 +8,12 @@
 - Null/Outlier check 
 - Visualisation/plots
 - Feature engineering
-2. Baseline Model
-3. XGBoost Model
-4. Setup the environment
-5. Automated Tests
-
+2. Model Selection
+- Baseline Model
+- XGBoost Model
+- Setup the environment
+3. Automated Tests
+##
 
 **1. Explatory Data Analysis (EDA)**
 
@@ -48,6 +49,7 @@ According to Balance and PrevAttempts boxplots below, we can see that values are
 </p>
 
 **Missing data:**
+
 
 
 **Visualisation/plots:**
