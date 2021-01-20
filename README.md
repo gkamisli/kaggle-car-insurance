@@ -89,14 +89,14 @@ Important information from the plots:
 The barplots of categorical columns like Communication, Education, Marital, Job, and LastContactMonth show that single people and highly educated (tertiary) are more inclined to purchase car insurances.
 
 <p align="center">
-    <img src="/visuals/Communication_carinsurance_plot.png" width=450>
-    <img src="/visuals/Education_carinsurance_plot.png" width=450>
-    <img src="/visuals/Marital_carinsurance_plot.png" width=450>
+    <img src="/visuals/Communication_carinsurance_plot.png" width=400>
+    <img src="/visuals/Education_carinsurance_plot.png" width=400>
+    <img src="/visuals/Marital_carinsurance_plot.png" width=400>
 </p>
 
 <p align="center">
-    <img src="/visuals/Job_carinsurance_plot.png" width=450>
-    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=450>
+    <img src="/visuals/Job_carinsurance_plot.png" width=400>
+    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=400>
 </p>
 
 **Feature engineering:**
@@ -115,13 +115,22 @@ df['CallDuration'] = pd.qcut(df['CallDuration'], 5, labels = [1,2,3,4,5])
 Categorical features:
 - Predictive models need numerical encodings for string data (e.g. one-hot encoding, word vectors with embeddings, ordinal representation); hence, categorical columns are converted into one-hot encoding representation. 
 
+##
 ### **2. Model Selection**
 
 The models used for this classification are RandomForest as the baseline model, XGBoost classifier and LSTM based neural network to compare results with it. 
 
 **Frameworks:** pandas, numpy, seaborn, sklearn, xgboost, tensorflow, unittest
 
+**Model cross-validation**: 
+
+Because test data isn't labelled, train data is split into train and validation data for model comparisons. 
+- Baseline (RandomForest) and XGBoost: 5-fold cross-validation is used along with Grid Search to find the best parameters and model. So, 
+- Neural Network: Validation data is obtained from 25% of train data. Then, it is used against the train data not to overfit while training the model at every epoch. 
+
 **Baseline Model**
+
+
 
 
 **XGBoost Model**
@@ -135,8 +144,8 @@ The models used for this classification are RandomForest as the baseline model, 
 Python requirement: > Python3.7.5
 <br>$ pip install -r requirements.txt
 
+##
 ### **4 Automated Tests**
-
 
 Filepath to run model tests: kaggle-car-insurance/
 <br>$ python -m unittest discover -s tests -p test_models.py -t ..
