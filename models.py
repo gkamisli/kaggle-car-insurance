@@ -143,7 +143,7 @@ class NeuralNetworkModel(object):
     def _build_model(self):
 
         self.clf = Sequential()
-        self.clf.add(LSTM(16, dropout=0.1, kernel_regularizer=l2(0.00001), return_sequences=True))
+        self.clf.add(LSTM(64, dropout=0.1, kernel_regularizer=l2(0.00001), return_sequences=True))
         self.clf.add(Dense(4))
         self.clf.add(Dense(2))
         self.clf.add(Dense(1, activation='sigmoid', name='output_layer'))

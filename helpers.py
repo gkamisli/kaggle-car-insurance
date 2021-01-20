@@ -99,7 +99,7 @@ class Data(object):
         # Fill any corresponding rows of Outcome with -1 from DaysPassed with "No Campaign"
         self.df.loc[self.df['DaysPassed'] == -1, 'Outcome'] = 'no_campaign'
 
-        # Remove any column if there are more than 50% of missing values
+        # Fill remaining NA values with None
         self.df['Outcome'].fillna('None', inplace=True)
 
         # Fill Communication column with None, and Job and Education columns with the most frequent value
