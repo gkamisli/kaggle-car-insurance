@@ -86,14 +86,14 @@ Important information from the plots:
 </p>
 
 <p align="center">
-    <img src="/visuals/Communication_carinsurance_plot.png" width=400>
-    <img src="/visuals/Education_carinsurance_plot.png" width=400>
-    <img src="/visuals/Marital_carinsurance_plot.png" width=400>
+    <img src="/visuals/Communication_carinsurance_plot.png" width=500>
+    <img src="/visuals/Education_carinsurance_plot.png" width=500>
+    <img src="/visuals/Marital_carinsurance_plot.png" width=500>
 </p>
 
 <p align="center">
-    <img src="/visuals/Job_carinsurance_plot.png" width=400>
-    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=400>
+    <img src="/visuals/Job_carinsurance_plot.png" width=500>
+    <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=500>
 </p>
 
 
