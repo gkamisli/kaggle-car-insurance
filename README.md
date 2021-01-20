@@ -36,7 +36,7 @@ Our dataset has 18 columns of which 8 columns are *object* datatype (i.e. string
 
 **Outlier check**:
 
-According to Balance and PrevAttempts boxplots below, we can see that values are distributed homogenously, but one particular data point is far from other data points. So, that data point (maximum number in columns) is dropped from the dataset not to create any noise. As can be seen, there is no obvious outlier in CallDuration and DaysPassed columns. 
+According to Balance and PrevAttempts boxplots below, we can see that values are distributed homogenously, but one particular data point is far from other data points. So, that data point (maximum number in columns) is dropped from the dataset not to create any noise. As can be seen, there is no obvious outlier in CallDuration and DaysPassed columns. Note: CallDuration is calculated by the difference between CallEnd and CallStart and it's added at this stage in order to investigate the correlation with CarInsurance. 
 
 <p align="center">
     <img src="/visuals/balance_boxplot.png" width=400>
@@ -63,6 +63,16 @@ Steps followed:
 <p align="center">
     <img src="/visuals/missing_data_per_column.png" width=200>
 </p>
+
+**Correlation:**
+
+We seek a dependency relationship between columns with CarInsurance sales. Here in the correlation table sorted in decreasing order and correlation heatmap, it's obvious that CarInsurance is correlated with CallDuration as well as a positive correlation with PrevAttempts and DaysPassed. However, there is no strong signal among other variables. 
+
+<p align="center">
+    <img src="/visuals/correlations.png" width=300>
+    <img src="/visuals/correlation_matrix_heatmap.png" width=400>
+</p>
+
 
 **Visualisation/plots:**
 
