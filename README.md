@@ -67,23 +67,26 @@ Steps followed:
 
 **Correlation:**
 
-We seek a dependency relationship between columns with CarInsurance sales. Here in the correlation table sorted in decreasing order and correlation heatmap, it's obvious that CarInsurance is correlated with CallDuration as well as a positive correlation with PrevAttempts and DaysPassed. However, there is no strong signal among other variables. 
+We seek a dependency relationship between columns with CarInsurance sales. Here in the correlation table sorted in decreasing order and correlation heatmap, it's obvious that CarInsurance is correlated with CallDuration as well as a positive correlation with PrevAttempts and DaysPassed. CarInsurance success is negatively correlated with HHInsurance, NoOfContacts, CarLoan, and LastContactDay. However, there is no strong signal among other variables. 
 
 <p align="center">
     <img src="/visuals/correlations.png" width=300>
-    <img src="/visuals/correlation_matrix_heatmap.png" width=500>
+    <img src="/visuals/correlation_matrix_heatmap.png" width=600>
 </p>
 
 **Data visualisation/plots:**
 
 Important information from the plots:
-- CallDuration: Longer calls are likely to make people purchase car insurance.
-- Age: Older people are more likely to buy car insurance. 
-- DaysPassed: People are more likely to buy car insurance if they're contacted after longer period of time. 
+- CallDuration: Longer calls are likely to make people purchase a car insurance.
+- Age: Older people are more likely to buy a car insurance. 
+- DaysPassed: People are more likely to buy a car insurance if they're contacted after longer period of time. 
+- HHInsurance: People having HHInsurace are less likely to buy a car insurance.
 
 <p align="center">
     <img src="/visuals/pairwise_plots.png" width=800>
 </p>
+
+The barplots of categorical columns like Communication, Education, Marital, Job, and LastContactMonth show that single people and highly educated (tertiary) are more inclined to purchase car insurances.
 
 <p align="center">
     <img src="/visuals/Communication_carinsurance_plot.png" width=500>
@@ -96,12 +99,27 @@ Important information from the plots:
     <img src="/visuals/LastContactMonth_carinsurance_plot.png" width=500>
 </p>
 
+**Feature engineering:**
 
+Feature engineering is useful to create new features from the existing ones like we did for CallDuration as well as to scale or convert the existing columns. It compromises of processes for categorical and numerical features separately. 
 
+Numerical features: 
+- Implemented group based category on Age, Balance, CallDuration intervals as below:
+```
+df['Age'] = pd.qcut(df['Age'], 5, labels = [1,2,3,4,5])
+df['Balance'] = pd.qcut(df['Balance'], 5, labels = [1,2,3,4,5])
+df['CallDuration'] = pd.qcut(df['CallDuration'], 5, labels = [1,2,3,4,5])
+```
+- However, it creates more noise to the models and decreased the accuracy/F1 score. So, keeping those features as it is results better. 
 
-
+Categorical features:
+- Predictive models need an numerical encoding for string data (e.g. one-hot encoding, word vectors with embeddings, ordinal representation); hence, categorical columns are converted into one-hot encoding representation. 
 
 ### **2. Model Selection**
+
+The models used for this classification are RandomForest as the baseline model, XGBoost classifier and LSTM based neural network to compare results with it. 
+
+**Frameworks:** pandas, numpy, seaborn, sklearn, xgboost, tensorflow, unittest
 
 **Baseline Model**
 
