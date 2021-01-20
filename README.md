@@ -1,7 +1,7 @@
 # Kaggle - Car Insurance Data Analysis and Models
 
 
-
+##
 ## Contents
 1. Explatory Data Analysis
 - Dataframe: shape, columns, description, dtypes 
@@ -204,12 +204,16 @@ F1 scores:
 ## 
 ### **3. Setup the environment**
 
+Setup a virtual environment and install necessary packages with requirements.txt
 Python requirement: > Python3.7.5
 <br>$ pip install -r requirements.txt
 
 ##
 ### **4 Automated Tests**
 
-The aim of the automated test is to check the processes of training, saving, and loading the models, evaluating their performances on the same validation data, and   
+The aim of the automated test is to check the processes of training, saving, and loading the models, evaluating their performances on the same validation data, and inspecting the prediction value for a single input. 
+
 Filepath to run model tests: kaggle-car-insurance/
 <br>$ python -m unittest discover -s tests -p test_models.py -t ..
+
+##
