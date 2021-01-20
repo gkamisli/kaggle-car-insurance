@@ -5,7 +5,8 @@
 ## Contents
 1. Explatory Data Analysis
 - Dataframe: shape, columns, description, dtypes 
-- Null/Outlier check 
+- Outlier check 
+- Missing data
 - Data visualisation/plots
 - Feature engineering
 2. Model Selection
