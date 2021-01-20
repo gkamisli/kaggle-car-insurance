@@ -1,7 +1,6 @@
 import unittest
 import numpy as np
 import os, sys, time, resource, platform
-from os import environ
 import logging
 
 from models import ModelPipes
@@ -31,7 +30,7 @@ class modelTest(unittest.TestCase):
         try:
             logger.info("Models test started.")
 
-            models = ModelPipes('models').load_pipes()
+            models = ModelPipes().load_pipes()
             logger.info("Baseline, XGBoost, Neural Network setup finished.")
 
             self.assertIsNotNone(models.baseline.clf)
