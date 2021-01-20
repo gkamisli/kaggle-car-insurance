@@ -15,14 +15,24 @@
 
 
 **1. Explatory Data Analysis (EDA)**
+
 EDA consists of couple of steps such as checking raw dataframe, handling null (NaN) or outliers, retrieving correlation values between columns and CarInsurance, investigating plots for more explanations, and feature engineering. 
 
-- DataFrame/columns: 
+**DataFrame checks:**
+Exploration of the dataset, including a snapshot of the dataset, datatypes of each column, statistics behind each column is needed before going deeper into the data processing and feature engineering steps. 
 
+Our dataset has 18 columns of which 8 columns are *object* datatype (i.e. string or mixed), and the rest are *int64* datatype. 
 
-- Outlier check:
+<img src="visuals/dataframe_head.png>
 
-According to Balance and PrevAttempts boxplots below, we can see that values are distributed homogenously, but one particular data point is far from other data points. So, that data point (maximum number in columns) is dropped from the dataset not to create any noise. As can be seen, there is no outlier in CallDuration and DaysPassed. 
+<img src="visuals/description_per_column.png">
+
+<img src="/visuals/dtypes_per_column.png" width=400>
+    
+
+**Outlier check**:
+
+According to Balance and PrevAttempts boxplots below, we can see that values are distributed homogenously, but one particular data point is far from other data points. So, that data point (maximum number in columns) is dropped from the dataset not to create any noise. As can be seen, there is no obvious outlier in CallDuration and DaysPassed columns. 
 
 <p align="center">
     <img src="/visuals/balance_boxplot.png" width=400>
@@ -34,9 +44,10 @@ According to Balance and PrevAttempts boxplots below, we can see that values are
     <img src="/visuals/days_passed_boxplot.png" width=400>
 </p>
 
-- Missing data:
+**Missing data:**
 
-- Visualisation/plots:
+
+**Visualisation/plots:**
 
 
 
